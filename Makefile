@@ -35,7 +35,7 @@ CFLAGS += -Wall -Werror
 CFLAGS += -DUSER_NAME=\"$(USER)\"
 
 # Optimizations
-CFLAGS += -O3 -ffast-math
+CFLAGS += -O0 -ffast-math
 CFLAGS += -ffunction-sections -fdata-sections
 CFLAGS += -Wl,--gc-sections
 CFLAGS += -fno-common
@@ -60,14 +60,10 @@ CFLAGS += -D"assert_param(expr)=((void)0)"
 
 #files
 SRCDIR = src \
-	 FreeRTOS \
-	 FreeRTOS/portable/GCC/ARM_CM4F \
 #	 $(STM32_LIB)/src \
 #	 Utilities/STM32F329I-Discovery
 
 INCDIR = inc \
-	 FreeRTOS/include \
-	 FreeRTOS/portable/GCC/ARM_CM4F \
 	 CORTEX_M4F_STM32F4 \
 	 CORTEX_M4F_STM32F4/board \
 	 CORTEX_M4F_STM32F4/Libraries/CMSIS/Device/ST/STM32F4xx/Include \
@@ -82,8 +78,6 @@ SRC += CORTEX_M4F_STM32F4/startup_stm32f429_439xx.s \
 SRC += $(wildcard $(addsuffix /*.c,$(SRCDIR))) \
 	$(wildcard $(addsuffix /*.s,$(SRCDIR)))
 
-SRC += FreeRTOS/portable/MemMang/heap_1.c
-
 SRC += $(STM32_LIB)/src/misc.c \
 	$(STM32_LIB)/src/stm32f4xx_gpio.c \
 	$(STM32_LIB)/src/stm32f4xx_rcc.c \
@@ -97,25 +91,6 @@ SRC += $(STM32_LIB)/src/misc.c \
 	$(STM32_LIB)/src/stm32f4xx_ltdc.c \
 	$(STM32_LIB)/src/stm32f4xx_fmc.c \
 	$(STM32_LIB)/src/stm32f4xx_rng.c \
-
-# Traffic
-#OBJS += $(PWD)/CORTEX_M4F_STM32F4/traffic/draw_graph.o
-#OBJS += $(PWD)/CORTEX_M4F_STM32F4/traffic/move_car.o
-#OBJS += $(PWD)/CORTEX_M4F_STM32F4/traffic/traffic.o
-#CFLAGS += -I $(PWD)/CORTEX_M4F_STM32F4/traffic/include
-
-# bulletTime
-#OBJS += $(PWD)/CORTEX_M4F_STM32F4/bulletTime/bulletTime.o
-#OBJS += $(PWD)/CORTEX_M4F_STM32F4/bulletTime/ball.o
-#CFLAGS += -I $(PWD)/CORTEX_M4F_STM32F4/bulletTime/include
-
-# Menu
-#OBJS += $(PWD)/CORTEX_M4F_STM32F4/menu/menu.o
-#CFLAGS += -I $(PWD)/CORTEX_M4F_STM32F4/menu/include
-
-#FreeRTOS Shell
-#OBJS += $(PWD)/src/shell.o
-#CFLAGS += -I $(PWD)/include
 
 OBJS += $(addprefix $(OUTDIR)/,$(patsubst %.s,%.o,$(SRC:.c=.o)))
 INCLUDES = $(addprefix -I, $(INCDIR))
