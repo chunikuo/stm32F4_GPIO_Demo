@@ -10,7 +10,7 @@ void RCC_Configuration_Demo3()
 void GPIO_Configuration_Demo3()
 {
 	// GPIO Configuration
-	// LED3 (Green): GPIO_Pin_13, LED4 (Red): GPIO_Pin_14
+	// LED3 (Green): GPIO_Pin_13
 	GPIO_InitTypeDef GPIO_InitStructure_O;
 	GPIO_InitStructure_O.GPIO_Pin = GPIO_Pin_13;
 	GPIO_InitStructure_O.GPIO_Mode = GPIO_Mode_OUT;

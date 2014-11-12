@@ -4,6 +4,7 @@
 #include "demo1.h"
 #include "demo2.h"
 #include "demo3.h"
+#include "demo4.h"
 
 int main()
 {
