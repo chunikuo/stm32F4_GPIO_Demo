@@ -1,13 +1,13 @@
 #include "stm32f4xx.h"
 #include "stm32f4xx_gpio.h"
 
-void RCC_Configuration()
+void RCC_Configuration_Demo1()
 {
 	// RCC Configuration
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
 }
 
-void GPIO_Configuration()
+void GPIO_Configuration_Demo1()
 {
 	// GPIO Configuration
 	// LED3 (Green): GPIO_Pin_13, LED4 (Red): GPIO_Pin_14
@@ -22,6 +22,9 @@ void GPIO_Configuration()
 
 void demo1()
 {
+	RCC_Configuration_Demo1();
+	GPIO_Configuration_Demo1();
+
 	// Demo Code: switch flashing two LED 
 	GPIO_ToggleBits(GPIOG, GPIO_Pin_14);
 
