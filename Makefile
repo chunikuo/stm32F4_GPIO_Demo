@@ -59,11 +59,11 @@ CFLAGS += -DUSE_STDPERIPH_DRIVER
 CFLAGS += -D"assert_param(expr)=((void)0)"
 
 #files
-SRCDIR = src \
+SRCDIR = src/GPIO \
 #	 $(STM32_LIB)/src \
 #	 Utilities/STM32F329I-Discovery
 
-INCDIR = inc \
+INCDIR = inc/GPIO \
 	 CORTEX_M4F_STM32F4 \
 	 CORTEX_M4F_STM32F4/board \
 	 CORTEX_M4F_STM32F4/Libraries/CMSIS/Device/ST/STM32F4xx/Include \

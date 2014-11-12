@@ -1,6 +1,7 @@
 #include "stm32f4xx.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_syscfg.h"
+#include "demo1.h"
 
 void RCC_Configuration(void)
 {
@@ -70,8 +71,9 @@ uint8_t status = 0;
 
 int main()
 {
-	RCC_Configuration();
-	GPIO_Configuration();
+	demo1();
+	//RCC_Configuration();
+	//GPIO_Configuration();
 	//Interrupts_Configuration();
 
 	//GPIO_ToggleBits(GPIOG, GPIO_Pin_14);
