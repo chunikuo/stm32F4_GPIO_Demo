@@ -33,19 +33,19 @@ void Interrupts_Configuration_Demo4(void)
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
 	/* Connect EXTI Line 0 to the button GPIO Pin */
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, GPIO_PinSource0);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, GPIO_PinSource9);
 	
 	/* Configure the EXTI line to generate an interrupt when the button is
 	 * pressed. The button pin is high when pressed, so it needs to trigger
 	 * when rising from low to high. */
-	EXTI_InitStructure.EXTI_Line = EXTI_Line0;
+	EXTI_InitStructure.EXTI_Line = EXTI_Line1;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 	
 	/* Enable and set Button EXTI Interrupt to the lowest priority */
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -53,13 +53,13 @@ void Interrupts_Configuration_Demo4(void)
 
 }
 
-void EXTI0_IRQHandler(void)
+void EXTI1_IRQHandler(void)
 {
-	if(EXTI_GetFlagStatus(EXTI_Line0) != RESET)
+	if(EXTI_GetFlagStatus(EXTI_Line1) != RESET)
 	{
 		// GPIO read IDR and assign to ODR
 		GPIOG->ODR = GPIOA->IDR << 13;
-		EXTI_ClearITPendingBit(EXTI_Line0);
+		EXTI_ClearITPendingBit(EXTI_Line1);
 	}
 }
 

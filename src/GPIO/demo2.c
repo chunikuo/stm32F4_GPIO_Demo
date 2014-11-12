@@ -32,14 +32,14 @@ void Interrupts_Configuration_Demo2(void)
 	/* Configure the EXTI line to generate an interrupt when the button is
 	 * pressed. The button pin is high when pressed, so it needs to trigger
 	 * when rising from low to high. */
-	EXTI_InitStructure.EXTI_Line = EXTI_Line1;
+	EXTI_InitStructure.EXTI_Line = EXTI_Line0;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 	
 	/* Enable and set Button EXTI Interrupt to the lowest priority */
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -47,12 +47,12 @@ void Interrupts_Configuration_Demo2(void)
 
 }
 
-void EXTI1_IRQHandler(void)
+void EXTI0_IRQHandler(void)
 {
-	if(EXTI_GetFlagStatus(EXTI_Line1) != RESET)
+	if(EXTI_GetFlagStatus(EXTI_Line0) != RESET)
 	{
 		GPIO_ToggleBits(GPIOG, GPIO_Pin_13);
-		EXTI_ClearITPendingBit(EXTI_Line1);
+		EXTI_ClearITPendingBit(EXTI_Line0);
 	}
 }
 
