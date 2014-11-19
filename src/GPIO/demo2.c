@@ -56,7 +56,7 @@ void EXTI0_IRQHandler(void)
 	}
 }
 
-void demo2()
+void demo()
 {
 	RCC_Configuration_Demo2();
 	GPIO_Configuration_Demo2();
