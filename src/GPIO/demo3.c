@@ -19,11 +19,11 @@ void GPIO_Configuration_Demo3()
 	GPIO_InitStructure_O.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOG, &GPIO_InitStructure_O);
 
-        GPIO_InitTypeDef GPIO_InitStructure_I;
-        GPIO_InitStructure_I.GPIO_Pin = GPIO_Pin_9;
-        GPIO_InitStructure_I.GPIO_Mode = GPIO_Mode_IN;
-        GPIO_InitStructure_I.GPIO_PuPd = GPIO_PuPd_NOPULL;	// Floating
-        GPIO_Init(GPIOG, &GPIO_InitStructure_I);
+	GPIO_InitTypeDef GPIO_InitStructure_I;
+	GPIO_InitStructure_I.GPIO_Pin = GPIO_Pin_9;
+	GPIO_InitStructure_I.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStructure_I.GPIO_PuPd = GPIO_PuPd_NOPULL;	// Floating
+	GPIO_Init(GPIOG, &GPIO_InitStructure_I);
 }
 
 void demo()
