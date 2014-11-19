@@ -63,7 +63,7 @@ void EXTI1_IRQHandler(void)
 	}
 }
 
-void deme4()
+void deme()
 {
 	RCC_Configuration_Demo4();
 	GPIO_Configuration_Demo4();

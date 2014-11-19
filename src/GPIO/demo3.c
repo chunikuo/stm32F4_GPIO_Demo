@@ -26,7 +26,7 @@ void GPIO_Configuration_Demo3()
         GPIO_Init(GPIOG, &GPIO_InitStructure_I);
 }
 
-void demo3()
+void demo()
 {
 	RCC_Configuration_Demo3();
 	GPIO_Configuration_Demo3();
