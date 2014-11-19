@@ -1,0 +1,15 @@
+demo1:
+    out(LED_G13) push-pull toggle with 1000000 interval
+    out(LED_G14) push-pull toggle with 1000000 interval
+demo2:
+    in(BUTTON_A0) interrupt Trigger_Rising
+    out(LED_G13) push-pull: toggle when interrupt occurred
+    out(LED_G14) push-pull: toggle with 1000000 interval
+demo3:
+    in(G9) floating
+    out(LED_G13) push-pull: polling G9 state
+demo4:
+    in(G9) floating interrupt Trigger_Rising
+    out(LED_G13) push-pull toggle when interrupt occurred
+demo5:
+    out(LED_G13) open drain no pull toggle with 1000000 interval
