@@ -55,7 +55,7 @@ CFLAGS += -DUSE_STDPERIPH_DRIVER
 CFLAGS += -D"assert_param(expr)=((void)0)"
 
 #files
-SRCDIR += src/GPIO \
+SRCDIR += \
 	src \
 
 SRC += $(wildcard $(addsuffix /*.c,$(SRCDIR))) \
@@ -89,15 +89,20 @@ INCDIR = inc/GPIO \
 
 INCLUDES = $(addprefix -I, $(INCDIR))
 
-all: $(BIN_IMAGE)
+all:
+	@echo "Usage: make demo%"
 
-$(BIN_IMAGE): $(EXECUTABLE)
-	$(OBJCOPY) -O binary $^ $@
-	$(OBJCOPY) -O ihex $^ $(HEX_IMAGE)
-	$(OBJDUMP) -h -S -D $^ > $(LIST_FILE)
-	$(SIZE) $(EXECUTABLE)
-	
-$(EXECUTABLE): $(OBJS)
+demo%: $(EXECUTABLE)-demo%
+	@echo "OBJCOPY	$(BIN_IMAGE)"
+	@$(OBJCOPY) -O binary $^ $(BIN_IMAGE)
+	@echo "OBJCOPY	$(HEX_IMAGE)"
+	@$(OBJCOPY) -O ihex $^ $(HEX_IMAGE)
+	@echo "OBJDUMP	$(LIST_FILE)"
+	@$(OBJDUMP) -h -S -D $^ > $(LIST_FILE)
+	@echo "SIZE $^"
+	@$(SIZE) $^
+
+$(EXECUTABLE)-demo%: $(OUTDIR)/src/GPIO/demo%.o $(OBJS)
 	@echo "LD	$@"
 	@$(LD) -o $@ $^ -Map=$(MAP_FILE)	$(LDFLAGS)
 
@@ -124,11 +129,13 @@ openocd_flash:
 	-c "flash write_image erase $(BIN_IMAGE)  0x08000000" \
 	-c "reset run" -c shutdown
 
-.PHONY: clean
+.PHONY: clean all flash openocd_flash 
+
 clean:
-	rm -f $(EXECUTABLE)
+	rm -f $(EXECUTABLE)*
 	rm -f $(BIN_IMAGE)
 	rm -f $(HEX_IMAGE)
 	rm -f $(LIST_FILE)
 	rm -f $(MAP_FILE)
 	rm -f $(OBJS)
+
