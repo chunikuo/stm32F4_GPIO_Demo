@@ -55,11 +55,11 @@ CFLAGS += -DUSE_STDPERIPH_DRIVER
 CFLAGS += -D"assert_param(expr)=((void)0)"
 
 #files
-SRCDIR = src/GPIO \
+SRCDIR += src/GPIO \
+	src \
 
 SRC += $(wildcard $(addsuffix /*.c,$(SRCDIR))) \
 	$(wildcard $(addsuffix /*.s,$(SRCDIR)))
-
 
 SRC += CORTEX_M4F_STM32F4/startup_stm32f429_439xx.s \
        CORTEX_M4F_STM32F4/startup/system_stm32f4xx.c \
