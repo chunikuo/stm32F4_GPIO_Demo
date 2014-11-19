@@ -49,10 +49,6 @@ CFLAGS += -DVECT_TAB_FLASH
 LDFLAGS += -T $(PWD)/CORTEX_M4F_STM32F4/stm32f429zi_flash.ld
 LDFLAGS += -L $(call get_library_path,libc.a)
 LDFLAGS += -L $(call get_library_path,libgcc.a)
-LDFLAGS += -O3
-
-# STARTUP FILE
-#OBJS += $(PWD)/CORTEX_M4F_STM32F4/startup_stm32f429_439xx.o
 
 # STM32F4xx_StdPeriph_Driver
 CFLAGS += -DUSE_STDPERIPH_DRIVER
@@ -60,23 +56,13 @@ CFLAGS += -D"assert_param(expr)=((void)0)"
 
 #files
 SRCDIR = src/GPIO \
-#	 $(STM32_LIB)/src \
-#	 Utilities/STM32F329I-Discovery
-
-INCDIR = inc/GPIO \
-	 CORTEX_M4F_STM32F4 \
-	 CORTEX_M4F_STM32F4/board \
-	 CORTEX_M4F_STM32F4/Libraries/CMSIS/Device/ST/STM32F4xx/Include \
-	 CORTEX_M4F_STM32F4/Libraries/CMSIS/Include \
-	 $(STM32_LIB)/inc \
-
-#My restart
-SRC += CORTEX_M4F_STM32F4/startup_stm32f429_439xx.s \
-       CORTEX_M4F_STM32F4/startup/system_stm32f4xx.c \
-       #$(PWD)/CORTEX_M4F_STM32F4/stm32f4xx_it.o \
 
 SRC += $(wildcard $(addsuffix /*.c,$(SRCDIR))) \
 	$(wildcard $(addsuffix /*.s,$(SRCDIR)))
+
+
+SRC += CORTEX_M4F_STM32F4/startup_stm32f429_439xx.s \
+       CORTEX_M4F_STM32F4/startup/system_stm32f4xx.c \
 
 SRC += $(STM32_LIB)/src/misc.c \
 	$(STM32_LIB)/src/stm32f4xx_gpio.c \
@@ -93,6 +79,14 @@ SRC += $(STM32_LIB)/src/misc.c \
 	$(STM32_LIB)/src/stm32f4xx_rng.c \
 
 OBJS += $(addprefix $(OUTDIR)/,$(patsubst %.s,%.o,$(SRC:.c=.o)))
+
+INCDIR = inc/GPIO \
+	 CORTEX_M4F_STM32F4 \
+	 CORTEX_M4F_STM32F4/board \
+	 CORTEX_M4F_STM32F4/Libraries/CMSIS/Device/ST/STM32F4xx/Include \
+	 CORTEX_M4F_STM32F4/Libraries/CMSIS/Include \
+	 $(STM32_LIB)/inc \
+
 INCLUDES = $(addprefix -I, $(INCDIR))
 
 all: $(BIN_IMAGE)
@@ -104,15 +98,18 @@ $(BIN_IMAGE): $(EXECUTABLE)
 	$(SIZE) $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJS)
-	$(LD) -o $@ $^ -Map=$(MAP_FILE)	$(LDFLAGS)
+	@echo "LD	$@"
+	@$(LD) -o $@ $^ -Map=$(MAP_FILE)	$(LDFLAGS)
 
 $(OUTDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
+	@echo "CC	$@"
+	@$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
 
 $(OUTDIR)/%.o: %.s
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
+	@echo "CC	$@"
+	@$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
 
 flash:
 	st-flash write $(BIN_IMAGE) 0x8000000
@@ -129,8 +126,9 @@ openocd_flash:
 
 .PHONY: clean
 clean:
-	rm -rf $(EXECUTABLE)
-	rm -rf $(BIN_IMAGE)
-	rm -rf $(HEX_IMAGE)
+	rm -f $(EXECUTABLE)
+	rm -f $(BIN_IMAGE)
+	rm -f $(HEX_IMAGE)
+	rm -f $(LIST_FILE)
+	rm -f $(MAP_FILE)
 	rm -f $(OBJS)
-	rm -f $(PROJECT).lst
