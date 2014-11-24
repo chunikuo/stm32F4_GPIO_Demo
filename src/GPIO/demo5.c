@@ -2,7 +2,7 @@
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_syscfg.h"
 
-void RCC_Configuration_Demo4()
+void RCC_Configuration_Demo()
 {
 	// RCC Configuration
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
@@ -27,7 +27,6 @@ void demo()
 {
 	RCC_Configuration_Demo();
 	GPIO_Configuration_Demo();
-	Interrupts_Configuration_Demo();
 
 	// Demo Code: Open Drain, no pull. 
 	// Open : Noise on Oscilloscope
